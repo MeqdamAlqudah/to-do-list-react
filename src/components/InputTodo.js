@@ -1,40 +1,50 @@
-import React from "react"
-import { v4 as uuidv4 } from "uuid";
-import { FaPlusCircle } from "react-icons/fa"
+import React from 'react';
+import { FaPlusCircle } from 'react-icons/fa';
+import PropTypes from 'prop-types';
+
 class InputTodo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: ''
-        }
-        this.onChange = this.onChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    onChange(e) {
-        this.setState({ id: uuidv4(), [e.target.name]: e.target.value, completed: false });
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '',
+    };
+    this.onChange = this.onChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-    handleSubmit(e) {
-        e.preventDefault()
-        if (this.state.title.trim()) {
-            this.props.addTodoProps(this.state.title)
-            this.setState({
-                title: "",
-            })
-        } else {
-            alert("Please write item")
-        }
-        e.target[0].value = '';
+  handleSubmit(e) {
+    const { title } = this.state;
+    const { addTodoProps } = this.props;
+    e.preventDefault();
+    if (title.trim()) {
+      addTodoProps(title);
+      this.setState({
+        title: '',
+      });
+    } else {
+      alert('Please write item');
     }
-    render() {
+    e.target[0].value = '';
+  }
 
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
-        return (
-            <form onSubmit={this.handleSubmit} className="form-container">
-                <input name="title" onChange={this.onChange} type="text" placeholder="Add Todo..." className="input-text" />
-                <button className="input-submit" >  <FaPlusCircle style={{ color: "darkcyan", fontSize: "20px", marginTop: "2px" }} /></button>
-            </form>
-        )
-    }
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit} className="form-container">
+        <input name="title" onChange={this.onChange} type="text" placeholder="Add Todo..." className="input-text" />
+        <button type="button" className="input-submit">
+          {' '}
+          <FaPlusCircle style={{ color: 'darkcyan', fontSize: '20px', marginTop: '2px' }} />
+        </button>
+      </form>
+    );
+  }
 }
-export default InputTodo
+
+InputTodo.propTypes = {
+  addTodoProps: PropTypes.func.isRequired,
+};
+export default InputTodo;
