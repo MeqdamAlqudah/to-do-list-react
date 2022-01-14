@@ -19,7 +19,7 @@ if (!todoArray.length) {
   componentDidMount();
 }
 function TodoContainer() {
-  const [currentTodo, changeTodos] = useState({ todos: todoArray });
+  const [currentTodo, changeTodo] = useState({ todos: todoArray });
   const handleChange = (id) => {
     todoArray = {
       todos: currentTodo.todos.map((todo) => {
@@ -29,7 +29,7 @@ function TodoContainer() {
         return todo;
       }),
     };
-    changeTodos(todoArray);
+    changeTodo(todoArray);
     localStorage.setItem('todoArray', JSON.stringify(todoArray.todos));
   };
   const delTodo = (id) => {
@@ -38,7 +38,7 @@ function TodoContainer() {
         ...currentTodo.todos.filter((todo) => todo.id !== id),
       ],
     };
-    changeTodos(todoArray);
+    changeTodo(todoArray);
 
     localStorage.setItem('todoArray', JSON.stringify(todoArray.todos));
   };
@@ -51,7 +51,7 @@ function TodoContainer() {
     todoArray = {
       todos: [...currentTodo.todos, newTodo],
     };
-    changeTodos(todoArray);
+    changeTodo(todoArray);
     localStorage.setItem('todoArray', JSON.stringify(todoArray.todos));
   };
   const setUpdate = (updatedTitle, id) => {
@@ -63,7 +63,7 @@ function TodoContainer() {
         return todo;
       }),
     };
-    changeTodos(todoArray);
+    changeTodo(todoArray);
     localStorage.setItem('todoArray', JSON.stringify(todoArray.todos));
   };
   return (
