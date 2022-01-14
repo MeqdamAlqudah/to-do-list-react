@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Routes, Route } from 'react-router-dom';
 import TodoList from './components/TodoList';
@@ -7,39 +7,40 @@ import Header from './components/Header';
 import InputTodo from './components/InputTodo';
 import About from './functionBased/About';
 import NotMatch from './functionBased/NotMatch';
+import Navbar from './components/Navbar';
 
-let ToDoArray = JSON.parse(localStorage.getItem('ToDoArray') || '[]');
+let todoArray = JSON.parse(localStorage.getItem('todoArray') || '[]');
 const componentDidMount = () => {
   fetch('https://jsonplaceholder.typicode.com/todos')
     .then((response) => response.json())
-    .then((data) => localStorage.setItem('ToDoArray', JSON.stringify(data)));
+    .then((data) => localStorage.setItem('todoArray', JSON.stringify(data)));
 };
-if (!ToDoArray.length) {
+if (!todoArray.length) {
   componentDidMount();
 }
 function TodoContainer() {
-  const [CurrentTodo, ChangeTodos] = useState({ todos: ToDoArray });
+  const [currentTodo, changeTodos] = useState({ todos: todoArray });
   const handleChange = (id) => {
-    ToDoArray = {
-      todos: CurrentTodo.todos.map((todo) => {
+    todoArray = {
+      todos: currentTodo.todos.map((todo) => {
         if (todo.id === id) {
           todo.completed = !todo.completed;
         }
         return todo;
       }),
     };
-    ChangeTodos(ToDoArray);
-    localStorage.setItem('ToDoArray', JSON.stringify(ToDoArray.todos));
+    changeTodos(todoArray);
+    localStorage.setItem('todoArray', JSON.stringify(todoArray.todos));
   };
   const delTodo = (id) => {
-    ToDoArray = {
+    todoArray = {
       todos: [
-        ...CurrentTodo.todos.filter((todo) => todo.id !== id),
+        ...currentTodo.todos.filter((todo) => todo.id !== id),
       ],
     };
-    ChangeTodos(ToDoArray);
+    changeTodos(todoArray);
 
-    localStorage.setItem('ToDoArray', JSON.stringify(ToDoArray.todos));
+    localStorage.setItem('todoArray', JSON.stringify(todoArray.todos));
   };
   const addTodoItem = (title) => {
     const newTodo = {
@@ -47,23 +48,23 @@ function TodoContainer() {
       title,
       completed: false,
     };
-    ToDoArray = {
-      todos: [...CurrentTodo.todos, newTodo],
+    todoArray = {
+      todos: [...currentTodo.todos, newTodo],
     };
-    ChangeTodos(ToDoArray);
-    localStorage.setItem('ToDoArray', JSON.stringify(ToDoArray.todos));
+    changeTodos(todoArray);
+    localStorage.setItem('todoArray', JSON.stringify(todoArray.todos));
   };
   const setUpdate = (updatedTitle, id) => {
-    ToDoArray = {
-      todos: CurrentTodo.todos.map((todo) => {
+    todoArray = {
+      todos: currentTodo.todos.map((todo) => {
         if (todo.id === id) {
           todo.title = updatedTitle;
         }
         return todo;
       }),
     };
-    ChangeTodos(ToDoArray);
-    localStorage.setItem('ToDoArray', JSON.stringify(ToDoArray.todos));
+    changeTodos(todoArray);
+    localStorage.setItem('todoArray', JSON.stringify(todoArray.todos));
   };
   return (
 
@@ -73,12 +74,13 @@ function TodoContainer() {
         path="/"
         element={(
           <div className="container">
+            <Navbar />
             <div className="inner">
               <Header />
               <InputTodo addTodoProps={addTodoItem} />
               <TodoList
                 setUpdate={setUpdate}
-                todos={CurrentTodo.todos}
+                todos={currentTodo.todos}
                 handleChangeProps={handleChange}
                 deleteTodoProps={delTodo}
               />

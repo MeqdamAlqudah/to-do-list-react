@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   useLocation, Link, Route, Routes,
 } from 'react-router-dom';
@@ -18,7 +17,6 @@ const About = () => {
       </ul>
       <Routes>
         <Route path={`${path}/:slug`} element={<SinglePage />} />
-
       </Routes>
     </div>
   );

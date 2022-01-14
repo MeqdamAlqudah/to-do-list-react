@@ -39,7 +39,7 @@ function TodoItem(props) {
 
     <li className={styles.item}>
       <div onDoubleClick={handleEditing}>
-        <input className={styles.checkbox} type="checkbox" checked={completed} onChange={() => (handleChangeProps(id))} style={viewMode} value={title} />
+        <input className={styles.checkbox} type="checkbox" checked={completed} onChange={() => handleChangeProps(id)} style={viewMode} value={title} />
         <button
           type="button"
           onClick={() => deleteTodoProps(id)}
@@ -67,13 +67,19 @@ function TodoItem(props) {
 }
 
 TodoItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  todo: PropTypes.array.isRequired,
+  title: PropTypes.string,
+  id: PropTypes.string,
+  todo: PropTypes.object,
   deleteTodoProps: PropTypes.func.isRequired,
-  completed: PropTypes.bool.isRequired,
+  completed: PropTypes.bool,
   handleChangeProps: PropTypes.func.isRequired,
   setUpdate: PropTypes.func.isRequired,
 };
 
+TodoItem.defaultProps = {
+  title: 'No-title',
+  id: '007',
+  todo: {},
+  completed: false,
+};
 export default TodoItem;
