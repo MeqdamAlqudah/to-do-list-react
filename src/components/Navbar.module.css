@@ -1,0 +1,28 @@
+
+.nav {
+  width: 104vw;
+  box-shadow: -2px 4px 13px 3px #0000008a;
+  height: 6vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ul {
+  display: flex;
+  list-style: none;
+  width: 10rem;
+  justify-content: space-between;
+}
+
+.ul a:link,
+.ul a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+.ul a:hover,
+.ul a:active {
+  text-decoration: underline;
+  color: black;
+}
